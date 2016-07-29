@@ -4,10 +4,14 @@
     <string name="provider">com.emailxl.consked.provider</string>
     <string name="loading">Loading &#8230;</string>
     <string name="label_id">MySQL Id:</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
     <string name="label_button">Update</string>
+    <string name="label_login">Login</string>
     <string name="radio_Expo">Expo</string>
     <string name="radio_Job">Job</string>
     <string name="radio_Station">Station</string>
     <string name="radio_Worker">Worker</string>
     <string name="error_network">There is currently no network connectivity</string>
+    <string name="title_activity_login2">Login2</string>
 </resources>

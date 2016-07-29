@@ -25,6 +25,7 @@ public class ConSkedProvider extends ContentProvider {
     // database table names
     public static final String EXPO_TABLE = "expo";
     public static final String JOB_TABLE = "job";
+    public static final String SHIFTSTATUS_TABLE = "shiftstatus";
     public static final String STATION_TABLE = "station";
     public static final String WORKER_TABLE = "worker";
     // fields for my content provider
@@ -38,18 +39,25 @@ public class ConSkedProvider extends ContentProvider {
     static final String IDINT = "idInt";
     static final String IDEXT = "idExt";
     static final String JSON = "json";
+    static final String WORKERIDEXT = "workerIdExt";
+    static final String STATIONIDEXT = "stationIdExt";
+    static final String EXPOIDEXT = "expoIdExt";
+    static final String STATUSTYPE = "statusType";
+    static final String STATUSTIME = "statusTime";
 
     // integer values used in content URI
     static final int EXPO_LIST = 1;
     static final int JOB_LIST = 2;
-    static final int STATION_LIST = 3;
-    static final int WORKER_LIST = 4;
+    static final int SHIFTSTATUS_LIST = 3;
+    static final int STATION_LIST = 4;
+    static final int WORKER_LIST = 5;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         uriMatcher.addURI(PROVIDER_NAME, EXPO_TABLE, EXPO_LIST);
         uriMatcher.addURI(PROVIDER_NAME, JOB_TABLE, JOB_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, SHIFTSTATUS_TABLE, SHIFTSTATUS_LIST);
         uriMatcher.addURI(PROVIDER_NAME, STATION_TABLE, STATION_LIST);
         uriMatcher.addURI(PROVIDER_NAME, WORKER_TABLE, WORKER_LIST);
     }
@@ -77,6 +85,9 @@ public class ConSkedProvider extends ContentProvider {
                 break;
             case JOB_LIST:
                 queryBuilder.setTables(JOB_TABLE);
+                break;
+            case SHIFTSTATUS_LIST:
+                queryBuilder.setTables(SHIFTSTATUS_TABLE);
                 break;
             case STATION_LIST:
                 queryBuilder.setTables(STATION_TABLE);
@@ -109,6 +120,8 @@ public class ConSkedProvider extends ContentProvider {
                 return LIST + PROVIDER_NAME + "." + EXPO_TABLE;
             case JOB_LIST:
                 return LIST + PROVIDER_NAME + "." + JOB_TABLE;
+            case SHIFTSTATUS_LIST:
+                return LIST + PROVIDER_NAME + "." + SHIFTSTATUS_TABLE;
             case STATION_LIST:
                 return LIST + PROVIDER_NAME + "." + STATION_TABLE;
             case WORKER_LIST:
@@ -134,6 +147,10 @@ public class ConSkedProvider extends ContentProvider {
             case JOB_LIST:
                 row = db.insert(JOB_TABLE, "", values);
                 url += "/" + JOB_TABLE;
+                break;
+            case SHIFTSTATUS_LIST:
+                row = db.insert(SHIFTSTATUS_TABLE, "", values);
+                url += "/" + SHIFTSTATUS_TABLE;
                 break;
             case STATION_LIST:
                 row = db.insert(STATION_TABLE, "", values);
@@ -168,6 +185,9 @@ public class ConSkedProvider extends ContentProvider {
             case JOB_LIST:
                 count = db.delete(JOB_TABLE, selection, selectionArgs);
                 break;
+            case SHIFTSTATUS_LIST:
+                count = db.delete(SHIFTSTATUS_TABLE, selection, selectionArgs);
+                break;
             case STATION_LIST:
                 count = db.delete(STATION_TABLE, selection, selectionArgs);
                 break;
@@ -195,6 +215,9 @@ public class ConSkedProvider extends ContentProvider {
             case JOB_LIST:
                 count = db.update(JOB_TABLE, values, selection, selectionArgs);
                 break;
+            case SHIFTSTATUS_LIST:
+                count = db.update(SHIFTSTATUS_TABLE, values, selection, selectionArgs);
+                break;
             case STATION_LIST:
                 count = db.update(STATION_TABLE, values, selection, selectionArgs);
                 break;
@@ -217,6 +240,14 @@ public class ConSkedProvider extends ContentProvider {
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
                 + IDEXT + " INTEGER, "
                 + JSON + " TEXT)";
+        private static final String CREATE_SHIFTSTATUS_TABLE = "CREATE TABLE " + SHIFTSTATUS_TABLE
+                + " (" + IDINT + " INTEGER PRIMARY KEY, "
+                + IDEXT + " INTEGER, "
+                + WORKERIDEXT + " INTEGER "
+                + STATIONIDEXT + " INTEGER "
+                + EXPOIDEXT + " INTEGER "
+                + STATUSTYPE + " TEXT "
+                + STATUSTIME + " TEXT)";
         private static final String CREATE_STATION_TABLE = "CREATE TABLE " + STATION_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
                 + IDEXT + " INTEGER, "
@@ -235,6 +266,7 @@ public class ConSkedProvider extends ContentProvider {
 
             db.execSQL(CREATE_EXPO_TABLE);
             db.execSQL(CREATE_JOB_TABLE);
+            db.execSQL(CREATE_SHIFTSTATUS_TABLE);
             db.execSQL(CREATE_STATION_TABLE);
             db.execSQL(CREATE_WORKER_TABLE);
         }
@@ -244,6 +276,7 @@ public class ConSkedProvider extends ContentProvider {
 
             db.execSQL("DROP TABLE IF EXISTS " + EXPO_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + JOB_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + SHIFTSTATUS_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + STATION_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + WORKER_TABLE);
 
