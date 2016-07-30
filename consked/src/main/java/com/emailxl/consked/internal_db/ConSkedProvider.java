@@ -243,10 +243,10 @@ public class ConSkedProvider extends ContentProvider {
         private static final String CREATE_SHIFTSTATUS_TABLE = "CREATE TABLE " + SHIFTSTATUS_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
                 + IDEXT + " INTEGER, "
-                + WORKERIDEXT + " INTEGER "
-                + STATIONIDEXT + " INTEGER "
-                + EXPOIDEXT + " INTEGER "
-                + STATUSTYPE + " TEXT "
+                + WORKERIDEXT + " INTEGER, "
+                + STATIONIDEXT + " INTEGER, "
+                + EXPOIDEXT + " INTEGER, "
+                + STATUSTYPE + " TEXT, "
                 + STATUSTIME + " TEXT)";
         private static final String CREATE_STATION_TABLE = "CREATE TABLE " + STATION_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "

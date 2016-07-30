@@ -99,7 +99,7 @@ public class ShiftStatusInt {
                 "idExt=" + idExt + ", " +
                 "workerIdExt=" + workerIdExt + ", " +
                 "stationIdExt=" + stationIdExt + ", " +
-                "expoIdExt" + expoIdExt + ", " +
+                "expoIdExt=" + expoIdExt + ", " +
                 "statusType=" + statusType + ", " +
                 "statusTime=" + statusTime + "]";
     }

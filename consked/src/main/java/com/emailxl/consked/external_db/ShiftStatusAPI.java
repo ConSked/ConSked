@@ -77,18 +77,23 @@ public class ShiftStatusAPI {
         for (int i = 0; i < len; i++) {
             JSONObject json = jArray.getJSONObject(i);
 
-            int idExt = json.has("idExt") ? json.getInt("idExt") : 0;
-            int workerIdExt = json.has("workerIdExt") ? json.getInt("workerIdExt") : 0;
-            int stationIdExt = json.has("stationIdExt") ? json.getInt("stationIdExt") : 0;
-            int expoIdExt = json.has("expoIdExt") ? json.getInt("expoIdExt") : 0;
+            int idExt = json.has("shiftstatusid") ? json.getInt("shiftstatusid") : 0;
+            int workerIdExt = json.has("workerid") ? json.getInt("workerid") : 0;
+            int stationIdExt = json.has("stationid") ? json.getInt("stationid") : 0;
+            int expoIdExt = json.has("expoid") ? json.getInt("expoid") : 0;
             String statusType = json.has("statusType") ? json.getString("statusType") : null;
-            String statusTime = json.has("statusTime") ? json.getString("statusTime") : null;
+            JSONObject jStatusTime = json.has("statusTime") ? json.getJSONObject("statusTime") : null;
+
+            String statusTime = "";
+            if (jStatusTime != null) {
+                statusTime = jStatusTime.has("date") ? jStatusTime.getString("date") : null;
+            }
 
             ShiftStatusExt shiftstatus = new ShiftStatusExt();
             shiftstatus.setIdExt(idExt);
             shiftstatus.setWorkerIdExt(workerIdExt);
             shiftstatus.setStationIdExt(stationIdExt);
-            shiftstatus.setIdExt(expoIdExt);
+            shiftstatus.setExpoIdExt(expoIdExt);
             shiftstatus.setStatusType(statusType);
             shiftstatus.setStatusTime(statusTime);
 

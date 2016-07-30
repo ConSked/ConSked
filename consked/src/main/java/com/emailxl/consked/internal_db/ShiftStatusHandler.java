@@ -7,6 +7,9 @@ import android.net.Uri;
 
 import com.emailxl.consked.utils.AppConstants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class for handling the shiftstatus table
  * <p/>
@@ -29,7 +32,7 @@ public class ShiftStatusHandler {
         this.uri = new Uri.Builder()
                 .scheme(AppConstants.SCHEME)
                 .authority(AppConstants.AUTHORITY)
-                .path(ConSkedProvider.EXPO_TABLE)
+                .path(ConSkedProvider.SHIFTSTATUS_TABLE)
                 .build();
     }
 
@@ -63,33 +66,43 @@ public class ShiftStatusHandler {
     /**
      * Method to retrieve a shiftstatus with a specific external id
      *
-     * @param idExt The id of the event to be retrieved.
+     * @param expoIdExt The id of the shift expo.
+     * @param stationIdExt The id of the shift station.
+     * @param workerIdExt The id of the shift worker.
      * @return The shiftstatus object for the specified id.
      */
-    public ShiftStatusInt getShiftStatusIdExt(int idExt) {
+    public List<ShiftStatusInt> getShiftStatusIdExt(int expoIdExt, int stationIdExt, int workerIdExt) {
 
-        String selection = ConSkedProvider.IDEXT + " = ?";
-        String[] selectionArgs = {Integer.toString(idExt)};
+        String selection = ConSkedProvider.EXPOIDEXT + " = ? AND " +
+                           ConSkedProvider.STATIONIDEXT + " = ? AND " +
+                           ConSkedProvider.WORKERIDEXT + " = ?";
+        String[] selectionArgs = {Integer.toString(expoIdExt),
+                                  Integer.toString(stationIdExt),
+                                  Integer.toString(workerIdExt)};
+        String sortOrder = ConSkedProvider.STATUSTIME + " ASC";
 
-        Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
+        Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, sortOrder);
 
-        ShiftStatusInt shiftstatus = null;
+        List<ShiftStatusInt> shiftstatusList = new ArrayList<>();
         if (cursor != null) {
             if (cursor.moveToFirst()) {
+                do {
+                    ShiftStatusInt shiftstatus = new ShiftStatusInt(
+                            cursor.getInt(0),       // idInt
+                            cursor.getInt(1),       // idExt
+                            cursor.getInt(2),       // workerIdExt
+                            cursor.getInt(3),       // stationIdExt
+                            cursor.getInt(4),       // expoIdExt
+                            cursor.getString(5),    // statusType
+                            cursor.getString(6));   // statusTime
 
-                shiftstatus = new ShiftStatusInt(
-                        cursor.getInt(0),       // idInt
-                        cursor.getInt(1),       // idExt
-                        cursor.getInt(2),       // workerIdExt
-                        cursor.getInt(3),       // stationIdExt
-                        cursor.getInt(4),       // expoIdExt
-                        cursor.getString(5),    // statusType
-                        cursor.getString(6));   // statusTime
+                    shiftstatusList.add(shiftstatus);
+                } while (cursor.moveToNext());
             }
 
             cursor.close();
         }
-        return shiftstatus;
+        return shiftstatusList;
     }
 
     /**

@@ -6,8 +6,12 @@
     <string name="label_id">MySQL Id:</string>
     <string name="label_email">Email</string>
     <string name="label_password">Password</string>
-    <string name="label_button">Update</string>
+    <string name="label_test">Test</string>
     <string name="label_login">Login</string>
+    <string name="label_next">Next</string>
+    <string name="label_expoid">expoId:</string>
+    <string name="label_stationid">stationId:</string>
+    <string name="label_workerid">workerId:</string>
     <string name="radio_Expo">Expo</string>
     <string name="radio_Job">Job</string>
     <string name="radio_Station">Station</string>

@@ -17,6 +17,7 @@
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -44,8 +45,8 @@
         </service>
         <service
             android:name=".external_db.SyncService"
-            android:exported="false"
-            android:process=":sync">
+            android:exported="false">
+            <!-- android:process=":sync" -->
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
@@ -55,6 +56,8 @@
                 android:resource="@xml/syncadapter"/>
         </service>
 
+        <activity android:name=".ShiftStatus">
+        </activity>
     </application>
 
 </manifest>

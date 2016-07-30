@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
 
             account = createSyncAccount(this);
 
-            findViewById(R.id.button).setOnClickListener(
+            findViewById(R.id.button_test).setOnClickListener(
                     new View.OnClickListener() {
 
                         @Override
@@ -96,6 +96,18 @@ public class MainActivity extends Activity {
 
                             ContentResolver.requestSync(account, AppConstants.AUTHORITY, extras);
                             pd = ProgressDialog.show(view.getContext(), "", getString(R.string.loading), true);
+                        }
+                    }
+            );
+
+            findViewById(R.id.button_next).setOnClickListener(
+                    new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View view) {
+                            Intent inShiftStatus = new Intent(view.getContext(), ShiftStatus.class);
+                            startActivity(inShiftStatus);
+                            finish();
                         }
                     }
             );
