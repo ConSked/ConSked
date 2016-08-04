@@ -7,17 +7,21 @@ package com.emailxl.consked.internal_db;
  */
 public class WorkerInt {
     private int idInt;
-    private int idExt;
-    private String json;
+    private int workerIdExt;
+    private String firstName;
+    private String lastName;
+    private String authrole;
 
     // Constructors
     public WorkerInt() {
     }
 
-    public WorkerInt(int idInt, int idExt, String json) {
+    public WorkerInt(int idInt, int workerIdExt, String firstName, String lastName, String authrole) {
         this.idInt = idInt;
-        this.idExt = idExt;
-        this.json = json;
+        this.workerIdExt = workerIdExt;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.authrole = authrole;
     }
 
     // idInt functions
@@ -29,30 +33,49 @@ public class WorkerInt {
         this.idInt = idInt;
     }
 
-    // idExt functions
-    public int getIdExt() {
-        return this.idExt;
+    // workerIdExt functions
+    public int getWorkerIdExt() {
+        return this.workerIdExt;
     }
 
-    public void setIdExt(int idExt) {
-        this.idExt = idExt;
+    public void setWorkerIdExt(int workerIdExt) {
+        this.workerIdExt = workerIdExt;
     }
 
-    // json functions
-    public String getJson() {
-        return this.json;
+    // firstName functions
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public void setJson(String json) {
-        this.json = json;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    // lastName functions
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    // authrole functions
+    public String getAuthrole() {
+        return this.authrole;
+    }
+
+    public void setAuthrole(String authrole) {
+        this.authrole = authrole;
     }
 
     @Override
     public String toString() {
         return getClass().getName() + "[" +
                 "idInt=" + idInt + ", " +
-                "idExt=" + idExt + ", " +
-                "json=" + json + "]";
+                "workerIdExt=" + workerIdExt + ", " +
+                "firstName=" + firstName + ", " +
+                "lastName=" + lastName + ", " +
+                "authrole=" + authrole + "]";
     }
-
 }

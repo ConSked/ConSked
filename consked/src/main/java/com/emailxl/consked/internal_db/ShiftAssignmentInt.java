@@ -4,29 +4,23 @@ package com.emailxl.consked.internal_db;
  * @author ECG
  */
 
-public class ShiftStatusInt {
+public class ShiftAssignmentInt {
     private int idInt;
-    private int shiftstatusIdExt;
     private int workerIdExt;
+    private int jobIdExt;
     private int stationIdExt;
     private int expoIdExt;
-    private String statusType;
-    private String statusTime;
 
     // Constructors
-    public ShiftStatusInt() {
+    public ShiftAssignmentInt() {
     }
 
-    public ShiftStatusInt(int idInt, int shiftstatusIdExt,
-                          int workerIdExt, int stationIdExt, int expoIdExt,
-                          String statusType, String statusTime) {
+    public ShiftAssignmentInt(int idInt, int workerIdExt, int jobIdExt, int stationIdExt, int expoIdExt) {
         this.idInt = idInt;
-        this.shiftstatusIdExt = shiftstatusIdExt;
         this.workerIdExt = workerIdExt;
+        this.jobIdExt = jobIdExt;
         this.stationIdExt = stationIdExt;
         this.expoIdExt = expoIdExt;
-        this.statusType = statusType;
-        this.statusTime = statusTime;
     }
 
     // idInt functions
@@ -38,15 +32,6 @@ public class ShiftStatusInt {
         this.idInt = idInt;
     }
 
-    // shiftstatusIdExt functions
-    public int getShiftstatusIdExt() {
-        return this.shiftstatusIdExt;
-    }
-
-    public void setShiftstatusIdExt(int shiftstatusIdExt) {
-        this.shiftstatusIdExt = shiftstatusIdExt;
-    }
-
     // workerIdExt functions
     public int getWorkerIdExt() {
         return this.workerIdExt;
@@ -54,6 +39,15 @@ public class ShiftStatusInt {
 
     public void setWorkerIdExt(int workerIdExt) {
         this.workerIdExt = workerIdExt;
+    }
+
+    // jobIdExt functions
+    public int getJobIdExt() {
+        return this.jobIdExt;
+    }
+
+    public void setJobIdExt(int jobIdExt) {
+        this.jobIdExt = jobIdExt;
     }
 
     // stationIdExt functions
@@ -74,33 +68,13 @@ public class ShiftStatusInt {
         this.expoIdExt = expoIdExt;
     }
 
-    // statusType functions
-    public String getStatusType() {
-        return this.statusType;
-    }
-
-    public void setStatusType(String statusType) {
-        this.statusType = statusType;
-    }
-
-    // statusTime functions
-    public String getStatusTime() {
-        return this.statusTime;
-    }
-
-    public void setStatusTime(String statusTime) {
-        this.statusTime = statusTime;
-    }
-
     @Override
     public String toString() {
         return getClass().getName() + "[" +
                 "idInt=" + idInt + ", " +
-                "shiftstatusIdExt=" + shiftstatusIdExt + ", " +
                 "workerIdExt=" + workerIdExt + ", " +
+                "jobIdExt=" + jobIdExt + ", " +
                 "stationIdExt=" + stationIdExt + ", " +
-                "expoIdExt=" + expoIdExt + ", " +
-                "statusType=" + statusType + ", " +
-                "statusTime=" + statusTime + "]";
+                "expoIdExt=" + expoIdExt + "]";
     }
 }

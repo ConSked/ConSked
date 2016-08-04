@@ -45,19 +45,11 @@
             android:textColor="@android:color/black"
             android:textStyle="bold"/>
         <RadioButton
-            android:id="@+id/radio_Job"
+            android:id="@+id/radio_StationJob"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/radio_Job"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"/>
-        <RadioButton
-            android:id="@+id/radio_Station"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/radio_Station"
+            android:text="@string/radio_StationJob"
             android:textColor="@android:color/black"
             android:textStyle="bold"/>
         <RadioButton

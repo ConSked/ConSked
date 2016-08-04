@@ -77,25 +77,20 @@ public class ShiftStatusAPI {
         for (int i = 0; i < len; i++) {
             JSONObject json = jArray.getJSONObject(i);
 
-            int idExt = json.has("shiftstatusid") ? json.getInt("shiftstatusid") : 0;
-            int workerIdExt = json.has("workerid") ? json.getInt("workerid") : 0;
-            int stationIdExt = json.has("stationid") ? json.getInt("stationid") : 0;
-            int expoIdExt = json.has("expoid") ? json.getInt("expoid") : 0;
-            String statusType = json.has("statusType") ? json.getString("statusType") : null;
+            int jshiftstatusid = json.has("shiftstatusid") ? json.getInt("shiftstatusid") : 0;
+            int jworkerid = json.has("workerid") ? json.getInt("workerid") : 0;
+            int jstationid = json.has("stationid") ? json.getInt("stationid") : 0;
+            int jexpoid = json.has("expoid") ? json.getInt("expoid") : 0;
+            String jstatusType = json.has("statusType") ? json.getString("statusType") : null;
             JSONObject jStatusTime = json.has("statusTime") ? json.getJSONObject("statusTime") : null;
 
-            String statusTime = "";
-            if (jStatusTime != null) {
-                statusTime = jStatusTime.has("date") ? jStatusTime.getString("date") : null;
-            }
-
             ShiftStatusExt shiftstatus = new ShiftStatusExt();
-            shiftstatus.setIdExt(idExt);
-            shiftstatus.setWorkerIdExt(workerIdExt);
-            shiftstatus.setStationIdExt(stationIdExt);
-            shiftstatus.setExpoIdExt(expoIdExt);
-            shiftstatus.setStatusType(statusType);
-            shiftstatus.setStatusTime(statusTime);
+            shiftstatus.setShiftstatusIdExt(jshiftstatusid);
+            shiftstatus.setWorkerIdExt(jworkerid);
+            shiftstatus.setStationIdExt(jstationid);
+            shiftstatus.setExpoIdExt(jexpoid);
+            shiftstatus.setStatusType(jstatusType);
+            shiftstatus.setStatusTime(TimestampUtils.loadTimestamp(jStatusTime));
 
             output[i] = shiftstatus;
         }

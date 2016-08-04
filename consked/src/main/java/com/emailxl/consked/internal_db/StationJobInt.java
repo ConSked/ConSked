@@ -1,27 +1,30 @@
 package com.emailxl.consked.internal_db;
 
 /**
- * The expo table data class
+ * The station table data class
  *
  * @author ECG
  */
-public class ExpoInt {
+public class StationJobInt {
     private int idInt;
+    private int stationIdExt;
     private int expoIdExt;
     private String startTime;
     private String stopTime;
-    private String title;
+    private String stationTitle;
 
     // Constructors
-    public ExpoInt() {
+    public StationJobInt() {
     }
 
-    public ExpoInt(int idInt, int expoIdExt, String startTime, String stopTime, String title) {
+    public StationJobInt(int idInt, int stationIdExt, int expoIdExt, String startTime, String stopTime,
+                         String stationTitle) {
         this.idInt = idInt;
+        this.stationIdExt = stationIdExt;
         this.expoIdExt = expoIdExt;
         this.startTime = startTime;
         this.stopTime = stopTime;
-        this.title = title;
+        this.stationTitle = stationTitle;
     }
 
     // idInt functions
@@ -31,6 +34,15 @@ public class ExpoInt {
 
     public void setIdInt(int idInt) {
         this.idInt = idInt;
+    }
+
+    // stationIdExt functions
+    public int getStationIdExt() {
+        return this.stationIdExt;
+    }
+
+    public void setStationIdExt(int stationIdExt) {
+        this.stationIdExt = stationIdExt;
     }
 
     // expoIdExt functions
@@ -60,22 +72,24 @@ public class ExpoInt {
         this.stopTime = stopTime;
     }
 
-    // title functions
-    public String getTitle() {
-        return this.title;
+    // stationTitle functions
+    public String getStationTitle() {
+        return this.stationTitle;
     }
 
-    public void setTitle(String json) {
-        this.title = title;
+    public void setStationTitle(String stationTitle) {
+        this.stationTitle = stationTitle;
     }
+
 
     @Override
     public String toString() {
         return getClass().getName() + "[" +
                 "idInt=" + idInt + ", " +
+                "stationIdExt=" + stationIdExt + ", " +
                 "expoIdExt=" + expoIdExt + ", " +
                 "startTime=" + startTime + ", " +
                 "stopTime=" + stopTime + ", " +
-                "title=" + title + "]";
+                "stationTitle=" + stationTitle + "]";
     }
 }

@@ -11,22 +11,21 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.emailxl.consked.MainActivity;
-import com.emailxl.consked.ShiftStatus;
 import com.emailxl.consked.internal_db.ExpoHandler;
 import com.emailxl.consked.internal_db.ExpoInt;
-import com.emailxl.consked.internal_db.JobHandler;
-import com.emailxl.consked.internal_db.JobInt;
+import com.emailxl.consked.internal_db.ShiftAssignmentHandler;
+import com.emailxl.consked.internal_db.ShiftAssignmentInt;
 import com.emailxl.consked.internal_db.ShiftStatusHandler;
 import com.emailxl.consked.internal_db.ShiftStatusInt;
-import com.emailxl.consked.internal_db.StationHandler;
-import com.emailxl.consked.internal_db.StationInt;
+import com.emailxl.consked.internal_db.StationJobHandler;
+import com.emailxl.consked.internal_db.StationJobInt;
 import com.emailxl.consked.internal_db.WorkerHandler;
 import com.emailxl.consked.internal_db.WorkerInt;
 
 import static com.emailxl.consked.external_db.ExpoAPI.readExpo;
-import static com.emailxl.consked.external_db.JobAPI.readJob;
+import static com.emailxl.consked.external_db.ShiftAssignmentAPI.readShiftAssignment;
 import static com.emailxl.consked.external_db.ShiftStatusAPI.readShiftStatus;
-import static com.emailxl.consked.external_db.StationAPI.readStation;
+import static com.emailxl.consked.external_db.StationJobAPI.readStationJob;
 import static com.emailxl.consked.external_db.WorkerAPI.readWorker;
 
 /**
@@ -74,7 +73,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void syncReadExt(int id, int expoId, int stationId, int workerId, String table) {
-        String output;
 
         if (LOG) Log.i(TAG, "Read");
 
@@ -82,26 +80,41 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             ExpoHandler db = new ExpoHandler(mContext);
             db.deleteExpoAll();
 
-            output = readExpo(id);
+            ExpoExt[] expoExts = readExpo(id);
 
-            ExpoInt expo = new ExpoInt();
-            expo.setIdExt(id);
-            expo.setJson(output);
+            if (expoExts != null && expoExts.length != 0)
+            {
+                for (ExpoExt expoExt : expoExts) {
 
-            db.addExpo(expo);
+                    ExpoInt expo = new ExpoInt();
 
-        } else if ("Job".equals(table)) {
-            JobHandler db = new JobHandler(mContext);
-            db.deleteJobAll();
+                    expo.setExpoIdExt(expoExt.getExpoIdExt());
+                    expo.setStartTime(expoExt.getStartTime().getDate());
+                    expo.setStopTime(expoExt.getStopTime().getDate());
+                    expo.setTitle(expoExt.getTitle());
 
-            output = readJob(id);
+                    db.addExpo(expo);
+                }
+            }
+        } else if ("ShiftAssignment".equals(table)) {
+            ShiftAssignmentHandler db = new ShiftAssignmentHandler(mContext);
+            db.deleteShiftAssignmentAll();
 
-            JobInt job = new JobInt();
-            job.setIdExt(id);
-            job.setJson(output);
+            ShiftAssignmentExt[] shiftAssignmentExts = readShiftAssignment(expoId, workerId);
 
-            db.addJob(job);
+            if (shiftAssignmentExts != null && shiftAssignmentExts.length != 0) {
+                for (ShiftAssignmentExt shiftAssignmentExt : shiftAssignmentExts) {
 
+                    ShiftAssignmentInt shiftassignment = new ShiftAssignmentInt();
+
+                    shiftassignment.setWorkerIdExt(shiftAssignmentExt.getWorkerIdExt());
+                    shiftassignment.setExpoIdExt(shiftAssignmentExt.getExpoIdExt());
+                    shiftassignment.setStationIdExt(shiftAssignmentExt.getStationIdExt());
+                    shiftassignment.setWorkerIdExt(shiftAssignmentExt.getWorkerIdExt());
+
+                    db.addShiftAssignment(shiftassignment);
+                }
+            }
         } else if ("ShiftStatus".equals(table)) {
             ShiftStatusHandler db = new ShiftStatusHandler(mContext);
             db.deleteShiftStatusAll();
@@ -113,39 +126,55 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
                     ShiftStatusInt shiftstatus = new ShiftStatusInt();
 
-                    shiftstatus.setIdExt(shiftStatusExt.getIdExt());
+                    shiftstatus.setShiftstatusIdExt(shiftStatusExt.getShiftstatusIdExt());
                     shiftstatus.setExpoIdExt(shiftStatusExt.getExpoIdExt());
                     shiftstatus.setStationIdExt(shiftStatusExt.getStationIdExt());
                     shiftstatus.setWorkerIdExt(shiftStatusExt.getWorkerIdExt());
                     shiftstatus.setStatusType(shiftStatusExt.getStatusType());
-                    shiftstatus.setStatusTime(shiftStatusExt.getStatusTime());
+                    shiftstatus.setStatusTime(shiftStatusExt.getStatusTime().getDate());
+
                     db.addShiftStatus(shiftstatus);
                 }
             }
+        } else if ("StationJob".equals(table)) {
+            StationJobHandler db = new StationJobHandler(mContext);
+            db.deleteStationJobAll();
 
-        } else if ("Station".equals(table)) {
-            StationHandler db = new StationHandler(mContext);
-            db.deleteStationAll();
+            StationJobExt[] stationJobExts = readStationJob(id);
 
-            output = readStation(id);
+            if (stationJobExts != null && stationJobExts.length != 0) {
+                for (StationJobExt stationJobExt: stationJobExts) {
 
-            StationInt station = new StationInt();
-            station.setIdExt(id);
-            station.setJson(output);
+                    StationJobInt stationjob = new StationJobInt();
 
-            db.addStation(station);
+                    stationjob.setStationIdExt(stationJobExt.getStationIdExt());
+                    stationjob.setExpoIdExt(stationJobExt.getExpoIdExt());
+                    stationjob.setStartTime(stationJobExt.getStartTime().getDate());
+                    stationjob.setStopTime(stationJobExt.getStopTime().getDate());
+                    stationjob.setStationTitle(stationJobExt.getStationTitle());
 
+                    db.addStationJob(stationjob);
+                }
+            }
         } else if ("Worker".equals(table)) {
             WorkerHandler db = new WorkerHandler(mContext);
             db.deleteWorkerAll();
 
-            output = readWorker(id);
+            WorkerExt[] workerExts = readWorker(id);
 
-            WorkerInt worker = new WorkerInt();
-            worker.setIdExt(id);
-            worker.setJson(output);
+            if (workerExts != null && workerExts.length != 0) {
+                for (WorkerExt workerExt: workerExts) {
 
-            db.addWorker(worker);
+                    WorkerInt worker = new WorkerInt();
+
+                    worker.setWorkerIdExt(workerExt.getWorkerIdExt());
+                    worker.setFirstName(workerExt.getFirstName());
+                    worker.setLastName(workerExt.getLastName());
+                    worker.setAuthrole(worker.getAuthrole());
+
+                    db.addWorker(worker);
+                }
+            }
         }
 
         mContext.sendBroadcast(new Intent(MainActivity.ACTION_FINISHED_SYNC));

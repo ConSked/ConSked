@@ -46,7 +46,7 @@ public class ShiftStatusHandler {
 
         ContentValues values = new ContentValues();
 
-        values.put(ConSkedProvider.IDEXT, shiftstatus.getIdExt());
+        values.put(ConSkedProvider.SHIFTSTATUSIDEXT, shiftstatus.getShiftstatusIdExt());
         values.put(ConSkedProvider.WORKERIDEXT, shiftstatus.getWorkerIdExt());
         values.put(ConSkedProvider.STATIONIDEXT, shiftstatus.getStationIdExt());
         values.put(ConSkedProvider.EXPOIDEXT, shiftstatus.getExpoIdExt());
@@ -89,7 +89,7 @@ public class ShiftStatusHandler {
                 do {
                     ShiftStatusInt shiftstatus = new ShiftStatusInt(
                             cursor.getInt(0),       // idInt
-                            cursor.getInt(1),       // idExt
+                            cursor.getInt(1),       // shiftstatusIdExt
                             cursor.getInt(2),       // workerIdExt
                             cursor.getInt(3),       // stationIdExt
                             cursor.getInt(4),       // expoIdExt

@@ -44,8 +44,10 @@ public class ExpoHandler {
 
         ContentValues values = new ContentValues();
 
-        values.put(ConSkedProvider.IDEXT, expo.getIdExt());
-        values.put(ConSkedProvider.JSON, expo.getJson());
+        values.put(ConSkedProvider.EXPOIDEXT, expo.getExpoIdExt());
+        values.put(ConSkedProvider.STARTTIME, expo.getStartTime());
+        values.put(ConSkedProvider.STOPTIME, expo.getStopTime());
+        values.put(ConSkedProvider.TITLE, expo.getTitle());
 
         Uri newuri = context.getContentResolver().insert(uri, values);
 
@@ -60,13 +62,13 @@ public class ExpoHandler {
     /**
      * Method to retrieve an expo with a specific external id
      *
-     * @param idExt The id of the event to be retrieved.
+     * @param expoIdExt The id of the expo to be retrieved.
      * @return The expo json for the specified id.
      */
-    public ExpoInt getExpoIdExt(int idExt) {
+    public ExpoInt getExpoIdExt(int expoIdExt) {
 
-        String selection = ConSkedProvider.IDEXT + " = ?";
-        String[] selectionArgs = {Integer.toString(idExt)};
+        String selection = ConSkedProvider.EXPOIDEXT + " = ?";
+        String[] selectionArgs = {Integer.toString(expoIdExt)};
 
         Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
 
@@ -76,8 +78,10 @@ public class ExpoHandler {
 
                 expo = new ExpoInt(
                         cursor.getInt(0),       // idInt
-                        cursor.getInt(1),       // idExt
-                        cursor.getString(2));   // json
+                        cursor.getInt(1),       // expoIdExt
+                        cursor.getString(2),    // startTime
+                        cursor.getString(3),    // stopTime
+                        cursor.getString(4));   // title
             }
 
             cursor.close();

@@ -28,7 +28,7 @@ public class WorkerHandler {
         this.uri = new Uri.Builder()
                 .scheme(AppConstants.SCHEME)
                 .authority(AppConstants.AUTHORITY)
-                .path(ConSkedProvider.EXPO_TABLE)
+                .path(ConSkedProvider.WORKER_TABLE)
                 .build();
     }
 
@@ -42,8 +42,10 @@ public class WorkerHandler {
 
         ContentValues values = new ContentValues();
 
-        values.put(ConSkedProvider.IDEXT, worker.getIdExt());
-        values.put(ConSkedProvider.JSON, worker.getJson());
+        values.put(ConSkedProvider.WORKERIDEXT, worker.getWorkerIdExt());
+        values.put(ConSkedProvider.FIRSTNAME, worker.getFirstName());
+        values.put(ConSkedProvider.LASTNAME, worker.getLastName());
+        values.put(ConSkedProvider.AUTHROLE, worker.getAuthrole());
 
         Uri newuri = context.getContentResolver().insert(uri, values);
 
@@ -63,7 +65,7 @@ public class WorkerHandler {
      */
     public WorkerInt getWorkerIdExt(int idExt) {
 
-        String selection = ConSkedProvider.IDEXT + " = ?";
+        String selection = ConSkedProvider.WORKERIDEXT + " = ?";
         String[] selectionArgs = {Integer.toString(idExt)};
 
         Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
@@ -74,8 +76,10 @@ public class WorkerHandler {
 
                 worker = new WorkerInt(
                         cursor.getInt(0),       // idInt
-                        cursor.getInt(1),       // idExt
-                        cursor.getString(2));   // json
+                        cursor.getInt(1),       // workerIdExt
+                        cursor.getString(2),    // firstName
+                        cursor.getString(3),    // lastName
+                        cursor.getString(4));   // authrole
             }
 
             cursor.close();

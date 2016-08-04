@@ -5,20 +5,20 @@ package com.emailxl.consked.external_db;
  */
 
 public class ShiftStatusExt {
-    private int idExt;
+    private int shiftstatusIdExt;
     private int workerIdExt;
     private int stationIdExt;
     private int expoIdExt;
     private String statusType;
-    private String statusTime;
+    private Timestamp statusTime;
 
     // Constructors
     public ShiftStatusExt() {
     }
 
-    public ShiftStatusExt(int idExt, int workerIdExt, int stationIdExt, int expoIdExt,
-                          String statusType, String statusTime) {
-        this.idExt = idExt;
+    public ShiftStatusExt(int shiftstatusIdExt, int workerIdExt, int stationIdExt, int expoIdExt,
+                          String statusType, Timestamp statusTime) {
+        this.shiftstatusIdExt = shiftstatusIdExt;
         this.workerIdExt = workerIdExt;
         this.stationIdExt = stationIdExt;
         this.expoIdExt = expoIdExt;
@@ -26,13 +26,13 @@ public class ShiftStatusExt {
         this.statusTime = statusTime;
     }
 
-    // idExt functions
-    public int getIdExt() {
-        return this.idExt;
+    // shiftstatusIdExt functions
+    public int getShiftstatusIdExt() {
+        return this.shiftstatusIdExt;
     }
 
-    public void setIdExt(int idExt) {
-        this.idExt = idExt;
+    public void setShiftstatusIdExt(int shiftstatusIdExt) {
+        this.shiftstatusIdExt = shiftstatusIdExt;
     }
 
     // workerIdExt functions
@@ -72,22 +72,22 @@ public class ShiftStatusExt {
     }
 
     // statusTime functions
-    public String getStatusTime() {
+    public Timestamp getStatusTime() {
         return this.statusTime;
     }
 
-    public void setStatusTime(String statusTime) {
+    public void setStatusTime(Timestamp statusTime) {
         this.statusTime = statusTime;
     }
 
     @Override
     public String toString() {
         return getClass().getName() + "[" +
-            "idExt=" + idExt + ", " +
-            "workerIdExt=" + workerIdExt + ", " +
-            "stationIdExt="+ stationIdExt + ", " +
-            "expoIdExt=" + expoIdExt + ", " +
-            "statusType=" + statusType + ", " +
-            "statusTime=" + statusTime + "]";
+                "shiftstatusIdExt=" + shiftstatusIdExt + ", " +
+                "workerIdExt=" + workerIdExt + ", " +
+                "stationIdExt=" + stationIdExt + ", " +
+                "expoIdExt=" + expoIdExt + ", " +
+                "statusType=" + statusType + ", " +
+                "statusTime=" + statusTime.toString() + "]";
     }
 }

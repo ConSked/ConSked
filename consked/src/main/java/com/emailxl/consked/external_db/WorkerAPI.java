@@ -2,6 +2,9 @@ package com.emailxl.consked.external_db;
 
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -18,7 +21,7 @@ public class WorkerAPI {
     private static final String TAG = "WorkerAPI";
     private static final boolean LOG = false;
 
-    public static String readWorker(int id) {
+    public static WorkerExt[] readWorker(int id) {
 
         String stringUrl = SERVER_URL;
 
@@ -27,7 +30,7 @@ public class WorkerAPI {
         }
 
         InputStream is = null;
-        String output = null;
+        WorkerExt[] output = null;
 
         try {
             URL url = new URL(stringUrl);
@@ -38,7 +41,8 @@ public class WorkerAPI {
             if (conn.getResponseCode() == 200) {
 
                 is = conn.getInputStream();
-                output = readStream(is);
+                String result = readStream(is);
+                output = loadWorker(result);
             }
         } catch (Exception e) {
             if (LOG) Log.e(TAG, e.getMessage());
@@ -50,6 +54,51 @@ public class WorkerAPI {
                     if (LOG) Log.e(TAG, e.getMessage());
                 }
             }
+        }
+
+        return output;
+    }
+
+    private static WorkerExt[] loadWorker(String result) throws Exception {
+
+        JSONArray jArray = new JSONArray(result);
+
+        int len = jArray.length();
+        WorkerExt[] output = new WorkerExt[len];
+
+        for (int i = 0; i < len; i++) {
+            JSONObject json = jArray.getJSONObject(i);
+
+            int jworkerid = json.has("workerid") ? json.getInt("workerid") : 0;
+            int jisDisabled = json.has("isDisabled") ? json.getInt("isDisabled") : 0;
+            JSONObject jlastLoginTime = json.has("lastLoginTime") ? json.getJSONObject("lastLoginTime") : null;
+            String jphone = json.has("phone") ? json.getString("phone") : null;
+            String jemail = json.has("email") ? json.getString("email") : null;
+            String jsmsemail = json.has("smsemail") ? json.getString("smsemail") : null;
+            String jpasswordHash = json.has("passwordHash") ? json.getString("passwordHash") : null;
+            String jresetCodeHash = json.has("resetCodeHash") ? json.getString("resetCodeHash") : null;
+            String jfirstName = json.has("firstName") ? json.getString("firstName") : null;
+            String jmiddleName = json.has("middleName") ? json.getString("middleName") : null;
+            String jlastName = json.has("lastName") ? json.getString("lastName") : null;
+            String jexternalAuthentication = json.has("externalAuthentication") ? json.getString("externalAuthentication") : null;
+            String jauthrole = json.has("authrole") ? json.getString("authrole") : null;
+
+            WorkerExt worker = new WorkerExt();
+            worker.setWorkerIdExt(jworkerid);
+            worker.setIsDisabled(jisDisabled);
+            worker.setLastLoginTime(TimestampUtils.loadTimestamp(jlastLoginTime));
+            worker.setPhone(jphone);
+            worker.setEmail(jemail);
+            worker.setSmsemail(jsmsemail);
+            worker.setPasswordHash(jpasswordHash);
+            worker.setResetCodeHash(jresetCodeHash);
+            worker.setFirstName(jfirstName);
+            worker.setMiddleName(jmiddleName);
+            worker.setLastName(jlastName);
+            worker.setExternalAuthentication(jexternalAuthentication);
+            worker.setAuthrole(jauthrole);
+
+            output[i] = worker;
         }
 
         return output;

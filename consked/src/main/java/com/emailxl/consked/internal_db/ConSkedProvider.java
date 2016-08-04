@@ -24,9 +24,9 @@ import com.emailxl.consked.utils.AppConstants;
 public class ConSkedProvider extends ContentProvider {
     // database table names
     public static final String EXPO_TABLE = "expo";
-    public static final String JOB_TABLE = "job";
+    public static final String SHIFTASSIGNMENT_TABLE = "shiftassignment";
     public static final String SHIFTSTATUS_TABLE = "shiftstatus";
-    public static final String STATION_TABLE = "station";
+    public static final String STATIONJOB_TABLE = "stationjob";
     public static final String WORKER_TABLE = "worker";
     // fields for my content provider
     static final String PROVIDER_NAME = AppConstants.AUTHORITY;
@@ -37,28 +37,35 @@ public class ConSkedProvider extends ContentProvider {
     static final int DATABASE_VERSION = 1;
     // database field names;
     static final String IDINT = "idInt";
-    static final String IDEXT = "idExt";
-    static final String JSON = "json";
-    static final String WORKERIDEXT = "workerIdExt";
-    static final String STATIONIDEXT = "stationIdExt";
     static final String EXPOIDEXT = "expoIdExt";
+    static final String STARTTIME = "startTime";
+    static final String STOPTIME = "stopTime";
+    static final String TITLE = "title";
+    static final String SHIFTSTATUSIDEXT = "shiftstatusIdExt";
+    static final String WORKERIDEXT = "workerIdExt";
+    static final String JOBIDEXT = "jobIdExt";
+    static final String STATIONIDEXT = "stationIdExt";
     static final String STATUSTYPE = "statusType";
     static final String STATUSTIME = "statusTime";
+    static final String STATIONTITLE = "stationTitle";
+    static final String FIRSTNAME = "firstName";
+    static final String LASTNAME = "lastName";
+    static final String AUTHROLE = "authrole";
 
     // integer values used in content URI
     static final int EXPO_LIST = 1;
-    static final int JOB_LIST = 2;
+    static final int SHIFTASSIGNMENT_LIST = 2;
     static final int SHIFTSTATUS_LIST = 3;
-    static final int STATION_LIST = 4;
+    static final int STATIONJOB_LIST = 4;
     static final int WORKER_LIST = 5;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         uriMatcher.addURI(PROVIDER_NAME, EXPO_TABLE, EXPO_LIST);
-        uriMatcher.addURI(PROVIDER_NAME, JOB_TABLE, JOB_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, SHIFTASSIGNMENT_TABLE, SHIFTASSIGNMENT_LIST);
         uriMatcher.addURI(PROVIDER_NAME, SHIFTSTATUS_TABLE, SHIFTSTATUS_LIST);
-        uriMatcher.addURI(PROVIDER_NAME, STATION_TABLE, STATION_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STATIONJOB_TABLE, STATIONJOB_LIST);
         uriMatcher.addURI(PROVIDER_NAME, WORKER_TABLE, WORKER_LIST);
     }
 
@@ -83,14 +90,14 @@ public class ConSkedProvider extends ContentProvider {
             case EXPO_LIST:
                 queryBuilder.setTables(EXPO_TABLE);
                 break;
-            case JOB_LIST:
-                queryBuilder.setTables(JOB_TABLE);
+            case SHIFTASSIGNMENT_LIST:
+                queryBuilder.setTables(SHIFTASSIGNMENT_TABLE);
                 break;
             case SHIFTSTATUS_LIST:
                 queryBuilder.setTables(SHIFTSTATUS_TABLE);
                 break;
-            case STATION_LIST:
-                queryBuilder.setTables(STATION_TABLE);
+            case STATIONJOB_LIST:
+                queryBuilder.setTables(STATIONJOB_TABLE);
                 break;
             case WORKER_LIST:
                 queryBuilder.setTables(WORKER_TABLE);
@@ -118,12 +125,12 @@ public class ConSkedProvider extends ContentProvider {
         switch (match) {
             case EXPO_LIST:
                 return LIST + PROVIDER_NAME + "." + EXPO_TABLE;
-            case JOB_LIST:
-                return LIST + PROVIDER_NAME + "." + JOB_TABLE;
+            case SHIFTASSIGNMENT_LIST:
+                return LIST + PROVIDER_NAME + "." + SHIFTASSIGNMENT_TABLE;
             case SHIFTSTATUS_LIST:
                 return LIST + PROVIDER_NAME + "." + SHIFTSTATUS_TABLE;
-            case STATION_LIST:
-                return LIST + PROVIDER_NAME + "." + STATION_TABLE;
+            case STATIONJOB_LIST:
+                return LIST + PROVIDER_NAME + "." + STATIONJOB_TABLE;
             case WORKER_LIST:
                 return LIST + PROVIDER_NAME + "." + WORKER_TABLE;
             default:
@@ -144,17 +151,17 @@ public class ConSkedProvider extends ContentProvider {
                 row = db.insert(EXPO_TABLE, "", values);
                 url += "/" + EXPO_TABLE;
                 break;
-            case JOB_LIST:
-                row = db.insert(JOB_TABLE, "", values);
-                url += "/" + JOB_TABLE;
+            case SHIFTASSIGNMENT_LIST:
+                row = db.insert(SHIFTASSIGNMENT_TABLE, "", values);
+                url += "/" + SHIFTASSIGNMENT_TABLE;
                 break;
             case SHIFTSTATUS_LIST:
                 row = db.insert(SHIFTSTATUS_TABLE, "", values);
                 url += "/" + SHIFTSTATUS_TABLE;
                 break;
-            case STATION_LIST:
-                row = db.insert(STATION_TABLE, "", values);
-                url += "/" + STATION_TABLE;
+            case STATIONJOB_LIST:
+                row = db.insert(STATIONJOB_TABLE, "", values);
+                url += "/" + STATIONJOB_TABLE;
                 break;
             case WORKER_LIST:
                 row = db.insert(WORKER_TABLE, "", values);
@@ -182,14 +189,14 @@ public class ConSkedProvider extends ContentProvider {
             case EXPO_LIST:
                 count = db.delete(EXPO_TABLE, selection, selectionArgs);
                 break;
-            case JOB_LIST:
-                count = db.delete(JOB_TABLE, selection, selectionArgs);
+            case SHIFTASSIGNMENT_LIST:
+                count = db.delete(SHIFTASSIGNMENT_TABLE, selection, selectionArgs);
                 break;
             case SHIFTSTATUS_LIST:
                 count = db.delete(SHIFTSTATUS_TABLE, selection, selectionArgs);
                 break;
-            case STATION_LIST:
-                count = db.delete(STATION_TABLE, selection, selectionArgs);
+            case STATIONJOB_LIST:
+                count = db.delete(STATIONJOB_TABLE, selection, selectionArgs);
                 break;
             case WORKER_LIST:
                 count = db.delete(WORKER_TABLE, selection, selectionArgs);
@@ -212,14 +219,14 @@ public class ConSkedProvider extends ContentProvider {
             case EXPO_LIST:
                 count = db.update(EXPO_TABLE, values, selection, selectionArgs);
                 break;
-            case JOB_LIST:
-                count = db.update(JOB_TABLE, values, selection, selectionArgs);
+            case SHIFTASSIGNMENT_LIST:
+                count = db.update(SHIFTASSIGNMENT_TABLE, values, selection, selectionArgs);
                 break;
             case SHIFTSTATUS_LIST:
                 count = db.update(SHIFTSTATUS_TABLE, values, selection, selectionArgs);
                 break;
-            case STATION_LIST:
-                count = db.update(STATION_TABLE, values, selection, selectionArgs);
+            case STATIONJOB_LIST:
+                count = db.update(STATIONJOB_TABLE, values, selection, selectionArgs);
                 break;
             case WORKER_LIST:
                 count = db.update(WORKER_TABLE, values, selection, selectionArgs);
@@ -234,28 +241,37 @@ public class ConSkedProvider extends ContentProvider {
 
         private static final String CREATE_EXPO_TABLE = "CREATE TABLE " + EXPO_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
-                + IDEXT + " INTEGER, "
-                + JSON + " TEXT)";
-        private static final String CREATE_JOB_TABLE = "CREATE TABLE " + JOB_TABLE
+                + EXPOIDEXT + " INTEGER, "
+                + STARTTIME + " TEXT, "
+                + STOPTIME + " TEXT, "
+                + TITLE + " TEXT)";
+        private static final String CREATE_SHIFTASSIGNMENT_TABLE = "CREATE TABLE " + SHIFTASSIGNMENT_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
-                + IDEXT + " INTEGER, "
-                + JSON + " TEXT)";
+                + WORKERIDEXT + " INTEGER, "
+                + JOBIDEXT + " INTEGER, "
+                + STATIONIDEXT + " INTEGER, "
+                + EXPOIDEXT + " INTEGER)";
         private static final String CREATE_SHIFTSTATUS_TABLE = "CREATE TABLE " + SHIFTSTATUS_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
-                + IDEXT + " INTEGER, "
+                + SHIFTSTATUSIDEXT + " INTEGER, "
                 + WORKERIDEXT + " INTEGER, "
                 + STATIONIDEXT + " INTEGER, "
                 + EXPOIDEXT + " INTEGER, "
                 + STATUSTYPE + " TEXT, "
                 + STATUSTIME + " TEXT)";
-        private static final String CREATE_STATION_TABLE = "CREATE TABLE " + STATION_TABLE
+        private static final String CREATE_STATIONJOB_TABLE = "CREATE TABLE " + STATIONJOB_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
-                + IDEXT + " INTEGER, "
-                + JSON + " TEXT)";
+                + STATIONIDEXT + " INTEGER, "
+                + EXPOIDEXT + " INTEGER, "
+                + STARTTIME + " TEXT, "
+                + STOPTIME + " TEXT, "
+                + STATIONTITLE + " TEXT)";
         private static final String CREATE_WORKER_TABLE = "CREATE TABLE " + WORKER_TABLE
                 + " (" + IDINT + " INTEGER PRIMARY KEY, "
-                + IDEXT + " INTEGER, "
-                + JSON + " TEXT)";
+                + WORKERIDEXT + " INTEGER, "
+                + FIRSTNAME + " TEXT, "
+                + LASTNAME + " TEXT, "
+                + AUTHROLE + " TEXT)";
 
         public DBHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -265,9 +281,9 @@ public class ConSkedProvider extends ContentProvider {
         public void onCreate(SQLiteDatabase db) {
 
             db.execSQL(CREATE_EXPO_TABLE);
-            db.execSQL(CREATE_JOB_TABLE);
+            db.execSQL(CREATE_SHIFTASSIGNMENT_TABLE);
             db.execSQL(CREATE_SHIFTSTATUS_TABLE);
-            db.execSQL(CREATE_STATION_TABLE);
+            db.execSQL(CREATE_STATIONJOB_TABLE);
             db.execSQL(CREATE_WORKER_TABLE);
         }
 
@@ -275,9 +291,9 @@ public class ConSkedProvider extends ContentProvider {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
             db.execSQL("DROP TABLE IF EXISTS " + EXPO_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + JOB_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + SHIFTASSIGNMENT_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + SHIFTSTATUS_TABLE);
-            db.execSQL("DROP TABLE IF EXISTS " + STATION_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + STATIONJOB_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + WORKER_TABLE);
 
             onCreate(db);

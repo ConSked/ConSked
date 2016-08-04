@@ -15,7 +15,7 @@ import com.emailxl.consked.utils.AppConstants;
  * @author ECG
  */
 
-public class StationHandler {
+public class StationJobHandler {
     private Context context;
     private Uri uri;
 
@@ -24,27 +24,30 @@ public class StationHandler {
      *
      * @param context The caller's context.
      */
-    public StationHandler(Context context) {
+    public StationJobHandler(Context context) {
         this.context = context;
         this.uri = new Uri.Builder()
                 .scheme(AppConstants.SCHEME)
                 .authority(AppConstants.AUTHORITY)
-                .path(ConSkedProvider.EXPO_TABLE)
+                .path(ConSkedProvider.STATIONJOB_TABLE)
                 .build();
     }
 
     /**
      * Method to add an station to the station table
      *
-     * @param station The station object.
+     * @param stationJob The station object.
      * @return The URI for the newly inserted item.
      */
-    public long addStation(StationInt station) {
+    public long addStationJob(StationJobInt stationJob) {
 
         ContentValues values = new ContentValues();
 
-        values.put(ConSkedProvider.IDEXT, station.getIdExt());
-        values.put(ConSkedProvider.JSON, station.getJson());
+        values.put(ConSkedProvider.STATIONIDEXT, stationJob.getStationIdExt());
+        values.put(ConSkedProvider.EXPOIDEXT, stationJob.getExpoIdExt());
+        values.put(ConSkedProvider.STARTTIME, stationJob.getStartTime());
+        values.put(ConSkedProvider.STOPTIME, stationJob.getStopTime());
+        values.put(ConSkedProvider.STATIONTITLE, stationJob.getStationTitle());
 
         Uri newuri = context.getContentResolver().insert(uri, values);
 
@@ -59,29 +62,32 @@ public class StationHandler {
     /**
      * Method to retrieve a station with a specific external id
      *
-     * @param idExt The id of the station to be retrieved.
+     * @param stationIdExt The id of the station to be retrieved.
      * @return The station json for the specified id.
      */
-    public StationInt getStationIdExt(int idExt) {
+    public StationJobInt getStationJobIdExt(int stationIdExt) {
 
-        String selection = ConSkedProvider.IDEXT + " = ?";
-        String[] selectionArgs = {Integer.toString(idExt)};
+        String selection = ConSkedProvider.STATIONIDEXT + " = ?";
+        String[] selectionArgs = {Integer.toString(stationIdExt)};
 
         Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
 
-        StationInt station = null;
+        StationJobInt stationJob = null;
         if (cursor != null) {
             if (cursor.moveToFirst()) {
 
-                station = new StationInt(
+                stationJob = new StationJobInt(
                         cursor.getInt(0),       // idInt
-                        cursor.getInt(1),       // idExt
-                        cursor.getString(2));   // json
+                        cursor.getInt(1),       // stationIdExt
+                        cursor.getInt(2),       // expoIdExt
+                        cursor.getString(3),    // startTime
+                        cursor.getString(4),    // stopTime
+                        cursor.getString(5));   // stationTitle
             }
 
             cursor.close();
         }
-        return station;
+        return stationJob;
     }
 
     /**
@@ -89,7 +95,7 @@ public class StationHandler {
      *
      * @return The number of stations deleted.
      */
-    public int deleteStationAll() {
+    public int deleteStationJobAll() {
 
         return context.getContentResolver().delete(uri, null, null);
     }

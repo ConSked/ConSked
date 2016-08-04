@@ -19,10 +19,8 @@ import android.widget.TextView;
 
 import com.emailxl.consked.internal_db.ExpoHandler;
 import com.emailxl.consked.internal_db.ExpoInt;
-import com.emailxl.consked.internal_db.JobHandler;
-import com.emailxl.consked.internal_db.JobInt;
-import com.emailxl.consked.internal_db.StationHandler;
-import com.emailxl.consked.internal_db.StationInt;
+import com.emailxl.consked.internal_db.StationJobHandler;
+import com.emailxl.consked.internal_db.StationJobInt;
 import com.emailxl.consked.internal_db.WorkerHandler;
 import com.emailxl.consked.internal_db.WorkerInt;
 import com.emailxl.consked.utils.AppConstants;
@@ -37,8 +35,7 @@ public class MainActivity extends Activity {
 
     private EditText etId;
     private RadioButton rbExpo;
-    private RadioButton rbJob;
-    private RadioButton rbStation;
+    private RadioButton rbStationJob;
     private RadioButton rbWorker;
     private TextView tvOutput;
     private Account account;
@@ -61,8 +58,7 @@ public class MainActivity extends Activity {
             etId.setText("1");
 
             rbExpo = (RadioButton) findViewById(R.id.radio_Expo);
-            rbJob = (RadioButton) findViewById(R.id.radio_Job);
-            rbStation = (RadioButton) findViewById(R.id.radio_Station);
+            rbStationJob = (RadioButton) findViewById(R.id.radio_StationJob);
             rbWorker = (RadioButton) findViewById(R.id.radio_Worker);
 
             tvOutput = (TextView) findViewById(R.id.output);
@@ -80,10 +76,8 @@ public class MainActivity extends Activity {
                             String table = "";
                             if (rbExpo.isChecked()) {
                                 table = "Expo";
-                            } else if (rbJob.isChecked()) {
-                                table = "Job";
-                            } else if (rbStation.isChecked()) {
-                                table = "Station";
+                            } else if (rbStationJob.isChecked()) {
+                                table = "StationJob";
                             } else if (rbWorker.isChecked()) {
                                 table = "Worker";
                             }
@@ -128,28 +122,21 @@ public class MainActivity extends Activity {
                     ExpoHandler db = new ExpoHandler(context);
                     ExpoInt expo = db.getExpoIdExt(id);
                     if (expo != null) {
-                        output = expo.getJson();
+                        output = expo.toString();
                     }
 
-                } else if (rbJob.isChecked()) {
-                    JobHandler db = new JobHandler(context);
-                    JobInt job = db.getJobIdExt(id);
-                    if (job != null) {
-                        output = job.getJson();
-                    }
-
-                } else if (rbStation.isChecked()) {
-                    StationHandler db = new StationHandler(context);
-                    StationInt station = db.getStationIdExt(id);
-                    if (station != null) {
-                        output = station.getJson();
+                } else if (rbStationJob.isChecked()) {
+                    StationJobHandler db = new StationJobHandler(context);
+                    StationJobInt stationJob = db.getStationJobIdExt(id);
+                    if (stationJob != null) {
+                        output = stationJob.toString();
                     }
 
                 } else if (rbWorker.isChecked()) {
                     WorkerHandler db = new WorkerHandler(context);
                     WorkerInt worker = db.getWorkerIdExt(id);
                     if (worker != null) {
-                        output = worker.getJson();
+                        output = worker.toString();
                     }
                 }
 
