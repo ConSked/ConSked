@@ -16,7 +16,7 @@ import static com.emailxl.consked.utils.Utils.readStream;
  */
 
 public class ShiftAssignmentAPI {
-    private static final String SERVER_URL = "http://dev1.consked.com/webservice/ShiftAssignment/Search";
+    private static final String SERVER_URL = "http://dev1.consked.com/webservice/ShiftAssignment/Search/";
     private static final String TAG = "ShiftAssignmentAPI";
     private static final boolean LOG = false;
 

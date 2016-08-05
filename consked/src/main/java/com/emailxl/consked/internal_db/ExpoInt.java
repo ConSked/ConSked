@@ -65,7 +65,7 @@ public class ExpoInt {
         return this.title;
     }
 
-    public void setTitle(String json) {
+    public void setTitle(String title) {
         this.title = title;
     }
 

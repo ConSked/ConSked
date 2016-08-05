@@ -71,7 +71,7 @@ public class WorkerAPI {
 
             int jworkerid = json.has("workerid") ? json.getInt("workerid") : 0;
             int jisDisabled = json.has("isDisabled") ? json.getInt("isDisabled") : 0;
-            JSONObject jlastLoginTime = json.has("lastLoginTime") ? json.getJSONObject("lastLoginTime") : null;
+            String jlastLoginTime = json.has("lastLoginTime") ? json.getString("lastLoginTime") : null;
             String jphone = json.has("phone") ? json.getString("phone") : null;
             String jemail = json.has("email") ? json.getString("email") : null;
             String jsmsemail = json.has("smsemail") ? json.getString("smsemail") : null;
@@ -86,7 +86,7 @@ public class WorkerAPI {
             WorkerExt worker = new WorkerExt();
             worker.setWorkerIdExt(jworkerid);
             worker.setIsDisabled(jisDisabled);
-            worker.setLastLoginTime(TimestampUtils.loadTimestamp(jlastLoginTime));
+            worker.setLastLoginTime(jlastLoginTime);
             worker.setPhone(jphone);
             worker.setEmail(jemail);
             worker.setSmsemail(jsmsemail);

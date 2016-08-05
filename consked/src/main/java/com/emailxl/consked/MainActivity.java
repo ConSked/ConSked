@@ -34,9 +34,7 @@ public class MainActivity extends Activity {
     private static boolean LOG = false;
 
     private EditText etId;
-    private RadioButton rbExpo;
-    private RadioButton rbStationJob;
-    private RadioButton rbWorker;
+    private RadioButton rbExpo, rbStationJob, rbWorker;
     private TextView tvOutput;
     private Account account;
     private static IntentFilter syncIntentFilter = new IntentFilter(ACTION_FINISHED_SYNC);

@@ -14,10 +14,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.emailxl.consked.internal_db.ExpoHandler;
+import com.emailxl.consked.internal_db.ExpoInt;
+import com.emailxl.consked.internal_db.ShiftAssignmentHandler;
+import com.emailxl.consked.internal_db.ShiftAssignmentInt;
 import com.emailxl.consked.internal_db.ShiftStatusHandler;
 import com.emailxl.consked.internal_db.ShiftStatusInt;
+import com.emailxl.consked.internal_db.StationJobHandler;
+import com.emailxl.consked.internal_db.StationJobInt;
+import com.emailxl.consked.internal_db.WorkerHandler;
+import com.emailxl.consked.internal_db.WorkerInt;
 import com.emailxl.consked.utils.AppConstants;
 
 import java.util.List;
@@ -31,6 +40,7 @@ public class ShiftStatus extends AppCompatActivity {
     private static boolean LOG = false;
 
     private EditText etExpoId, etStationId, etWorkerId;
+    private RadioButton rbShiftAssignment, rbShiftStatus;
     private TextView tvOutput;
     private Account account;
     private static IntentFilter syncIntentFilter = new IntentFilter(ACTION_FINISHED_SYNC);
@@ -57,6 +67,9 @@ public class ShiftStatus extends AppCompatActivity {
             etWorkerId = (EditText) findViewById(R.id.edit_workerid);
             etWorkerId.setText("1");
 
+            rbShiftAssignment = (RadioButton) findViewById(R.id.radio_ShiftAssignment);
+            rbShiftStatus = (RadioButton) findViewById(R.id.radio_ShiftStatus);
+
             tvOutput = (TextView) findViewById(R.id.output);
             tvOutput.setText("");
 
@@ -71,13 +84,20 @@ public class ShiftStatus extends AppCompatActivity {
                             int stationId = Integer.parseInt(etStationId.getText().toString().trim());
                             int workerId = Integer.parseInt(etWorkerId.getText().toString().trim());
 
+                            String table = "";
+                            if (rbShiftAssignment.isChecked()) {
+                                table = "ShiftAssignment";
+                            } else if (rbShiftStatus.isChecked()) {
+                                table = "ShiftStatus";
+                            }
+
                             Bundle extras = new Bundle();
                             extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
                             extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
                             extras.putInt("expoId", expoId);
                             extras.putInt("stationId", stationId);
                             extras.putInt("workerId", workerId);
-                            extras.putString("table", "ShiftStatus");
+                            extras.putString("table", table);
 
                             ContentResolver.requestSync(account, AppConstants.AUTHORITY, extras);
                             pd = ProgressDialog.show(view.getContext(), "", getString(R.string.loading), true);
@@ -98,11 +118,25 @@ public class ShiftStatus extends AppCompatActivity {
                 int stationId = Integer.parseInt(etStationId.getText().toString().trim());
                 int workerId = Integer.parseInt(etWorkerId.getText().toString().trim());
 
-                ShiftStatusHandler db = new ShiftStatusHandler(context);
-                List<ShiftStatusInt> shiftstatusInts = db.getShiftStatusIdExt(expoId, stationId, workerId);
-                if (shiftstatusInts != null) {
-                    for (ShiftStatusInt shiftstatusInt: shiftstatusInts) {
-                        output += shiftstatusInt.toString() + "\n\n";
+                if (rbShiftAssignment.isChecked()) {
+
+                    ShiftAssignmentHandler db = new ShiftAssignmentHandler(context);
+                    List<ShiftAssignmentInt> shiftassignmentInts = db.getShiftAssignmentIdExt(expoId, workerId);
+                    if (shiftassignmentInts != null) {
+                        for (ShiftAssignmentInt shiftassignmentInt: shiftassignmentInts) {
+                            output += shiftassignmentInt.toString() + "\n\n";
+                        }
+                    }
+
+
+                } else if (rbShiftStatus.isChecked()) {
+
+                    ShiftStatusHandler db = new ShiftStatusHandler(context);
+                    List<ShiftStatusInt> shiftstatusInts = db.getShiftStatusIdExt(expoId, stationId, workerId);
+                    if (shiftstatusInts != null) {
+                        for (ShiftStatusInt shiftstatusInt: shiftstatusInts) {
+                            output += shiftstatusInt.toString() + "\n\n";
+                        }
                     }
                 }
 

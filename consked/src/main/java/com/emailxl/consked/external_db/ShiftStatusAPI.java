@@ -17,7 +17,7 @@ import static com.emailxl.consked.utils.Utils.readStream;
 
 public class ShiftStatusAPI {
 
-    private static final String SERVER_URL = "http://dev1.consked.com/webservice/ShiftStatus/";
+    private static final String SERVER_URL = "http://dev1.consked.com/webservice/ShiftStatus/Search/";
     private static final String TAG = "ShiftStatusAPI";
     private static final boolean LOG = false;
 

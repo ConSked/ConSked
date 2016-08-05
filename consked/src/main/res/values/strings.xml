@@ -13,6 +13,8 @@
     <string name="label_stationid">stationId:</string>
     <string name="label_workerid">workerId:</string>
     <string name="radio_Expo">Expo</string>
+    <string name="radio_ShiftAssignment">ShiftAssignment</string>
+    <string name="radio_ShiftStatus">ShiftStatus</string>
     <string name="radio_StationJob">StationJob</string>
     <string name="radio_Worker">Worker</string>
     <string name="error_network">There is currently no network connectivity</string>

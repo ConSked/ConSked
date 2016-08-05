@@ -73,6 +73,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/radio_ShiftAssignment"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_ShiftAssignment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/radio_ShiftAssignment"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"/>
+        <RadioButton
+            android:id="@+id/radio_ShiftStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/radio_ShiftStatus"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"/>
+    </RadioGroup>
+
     <Button
         android:id="@+id/button_test"
         android:layout_width="match_parent"

@@ -75,10 +75,10 @@ public class ExpoAPI {
             int jexpoHourCeiling = json.has("expoHourCeiling") ? json.getInt("expoHourCeiling") : 0;
             String jtitle = json.has("title") ? json.getString("title") : null;
             String jdescription = json.has("description") ? json.getString("description") : null;
-            int jscheduleAssignAsYouGo = json.has("scheduleAssignAsYouGo") ? json.getInt("scheduleAssignAsYouGo") : 0;
-            int jscheduleVisible = json.has("scheduleVisible") ? json.getInt("scheduleVisible") : 0;
-            int jallowScheduleTimeConflict = json.has("allowScheduleTimeConflict") ? json.getInt("allowScheduleTimeConflict") : 0;
-            int jnewUserAddedOnRegistration = json.has("newUserAddedOnRegistration") ? json.getInt("newUserAddedOnRegistration") : 0;
+            boolean jscheduleAssignAsYouGo = json.has("scheduleAssignAsYouGo") || json.getBoolean("scheduleAssignAsYouGo");
+            boolean jscheduleVisible = json.has("scheduleVisible") || json.getBoolean("scheduleVisible");
+            boolean jallowScheduleTimeConflict = json.has("allowScheduleTimeConflict") || json.getBoolean("allowScheduleTimeConflict");
+            boolean jnewUserAddedOnRegistration = json.has("newUserAddedOnRegistration") || json.getBoolean("newUserAddedOnRegistration");
             int jworkerid = json.has("workerid") ? json.getInt("workerid") : 0;
 
             ExpoExt expo = new ExpoExt();
@@ -88,10 +88,10 @@ public class ExpoAPI {
             expo.setExpoHourCeiling(jexpoHourCeiling);
             expo.setTitle(jtitle);
             expo.setDescription(jdescription);
-            expo.setScheduleAssignAsYouGo(jscheduleAssignAsYouGo);
-            expo.setScheduleVisible(jscheduleVisible);
-            expo.setAllowScheduleTimeConflict(jallowScheduleTimeConflict);
-            expo.setNewUserAddedOnRegistration(jnewUserAddedOnRegistration);
+            expo.setScheduleAssignAsYouGo(jscheduleAssignAsYouGo ? 1 : 0);
+            expo.setScheduleVisible(jscheduleVisible ? 1 : 0);
+            expo.setAllowScheduleTimeConflict(jallowScheduleTimeConflict ? 1 : 0);
+            expo.setNewUserAddedOnRegistration(jnewUserAddedOnRegistration ? 1 : 0);
             expo.setWorkerIdExt(jworkerid);
 
             output[i] = expo;

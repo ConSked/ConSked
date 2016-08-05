@@ -7,7 +7,7 @@ package com.emailxl.consked.external_db;
 public class WorkerExt {
     private int workerIdExt;
     private int isDisabled;
-    private Timestamp lastLoginTime;
+    private String lastLoginTime;
     private String phone;
     private String email;
     private String smsemail;
@@ -23,7 +23,7 @@ public class WorkerExt {
     public WorkerExt() {
     }
 
-    public WorkerExt(int workerIdExt, int isDisabled, Timestamp lastLoginTime, String phone, String email,
+    public WorkerExt(int workerIdExt, int isDisabled, String lastLoginTime, String phone, String email,
                      String smsemail, String passwordHash, String resetCodeHash, String firstName,
                      String middleName, String lastName, String externalAuthentication,
                      String authrole) {
@@ -61,11 +61,11 @@ public class WorkerExt {
     }
 
     // lastLoginTime functions
-    public Timestamp getLastLoginTime() {
+    public String getLastLoginTime() {
         return this.lastLoginTime;
     }
 
-    public void setLastLoginTime(Timestamp lastLoginTime) {
+    public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
@@ -164,7 +164,7 @@ public class WorkerExt {
         return getClass().getName() + "[" +
                 "workerIdExt=" + workerIdExt + ", " +
                 "isDisabled=" + isDisabled + ", " +
-                "lastLoginTime=" + lastLoginTime.toString() + ", " +
+                "lastLoginTime=" + lastLoginTime + ", " +
                 "phone=" + phone + ", " +
                 "email=" + email + ", " +
                 "smsemail=" + smsemail + ", " +

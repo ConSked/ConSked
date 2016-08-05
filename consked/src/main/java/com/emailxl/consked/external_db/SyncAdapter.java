@@ -108,9 +108,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     ShiftAssignmentInt shiftassignment = new ShiftAssignmentInt();
 
                     shiftassignment.setWorkerIdExt(shiftAssignmentExt.getWorkerIdExt());
-                    shiftassignment.setExpoIdExt(shiftAssignmentExt.getExpoIdExt());
+                    shiftassignment.setJobIdExt(shiftAssignmentExt.getJobIdExt());
                     shiftassignment.setStationIdExt(shiftAssignmentExt.getStationIdExt());
-                    shiftassignment.setWorkerIdExt(shiftAssignmentExt.getWorkerIdExt());
+                    shiftassignment.setExpoIdExt(shiftAssignmentExt.getExpoIdExt());
 
                     db.addShiftAssignment(shiftassignment);
                 }
@@ -170,7 +170,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     worker.setWorkerIdExt(workerExt.getWorkerIdExt());
                     worker.setFirstName(workerExt.getFirstName());
                     worker.setLastName(workerExt.getLastName());
-                    worker.setAuthrole(worker.getAuthrole());
+                    worker.setAuthrole(workerExt.getAuthrole());
 
                     db.addWorker(worker);
                 }

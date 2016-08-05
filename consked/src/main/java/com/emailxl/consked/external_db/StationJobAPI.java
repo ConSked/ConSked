@@ -73,7 +73,7 @@ public class StationJobAPI {
             int jexpoid = json.has("expoid") ? json.getInt("expoid") : 0;
             JSONObject jstartTime = json.has("startTime") ? json.getJSONObject("startTime") : null;
             JSONObject jstopTime = json.has("stopTime") ? json.getJSONObject("stopTime") : null;
-            String jstationTitle = json.has("stationTitle") ? json.getString("stationTitle") : null;
+            String jstationTitle = json.has("title") ? json.getString("title") : null;
             String jdescription = json.has("description") ? json.getString("description") : null;
             String jlocation = json.has("location") ? json.getString("location") : null;
             String jURL = json.has("URL") ? json.getString("URL") : null;
